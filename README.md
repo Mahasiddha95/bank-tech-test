@@ -2,7 +2,7 @@
 
 ```````````````
 
-<h4>User Stories</h4>
+USER STORIES
 
 As a customer, I would like to deposit money to my account, so i can store my money.
 
@@ -11,8 +11,7 @@ As a customer, I would like to withdraw from my account, so I can collect my mon
 As a customer, I would like to see my statement, so I can see how much money i have in my account.
 
 ``````````````
-
-<h4>Acceptance Criteria</h4>
+ACCEPTANCE CRITERIA
 
 Given a client makes a deposit of 1000 on 10-01-2023
 And a deposit of 2000 on 13-01-2023
