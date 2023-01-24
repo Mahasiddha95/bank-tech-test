@@ -92,7 +92,7 @@ $ jest --coverage
 $ jest -u
 
 ```
-#Thoughts about it:
+# Thoughts about it:
 
 First time using snapshots and mocks in JS, it has been interesting to experiment with them. At time frustrating, but enjoyable.
 
