@@ -1,45 +1,44 @@
 class BankAccount {
-    constructor() {
-      this.balance = 0.0;
-      this.history = [];
+  constructor() {
+    this.transactions = []
+    this.balance = 0
+  }
+
+  deposit(amount) {
+    if(amount <= 0 || !Number.isInteger(amount)){
+      throw new Error('Invalid deposit amount');
     }
+    this.balance += parseFloat(amount)
+    this.transactions.push({
+      date: new Date().toLocaleDateString(),
+      credit: parseFloat(amount).toFixed(2),
+      debit: null,
+      balance: this.balance.toFixed(2)
+    })
+  }
 
-    deposit(amount) {
-      if(typeof amount !== "number" || amount <= 0) {
-        throw new Error("Invalid deposit amount");
-      }
-      this.balance += amount;
-      this.history.push({
-        date: new Date(),
-        type: 'deposit',
-        amount: amount,
-        balance: this.balance
-      });
+  withdraw(amount) {
+    if(amount <= 0 || !Number.isInteger(amount)){
+      throw new Error('Invalid withdrawal amount');
     }
+    if(amount > this.balance){
+      throw new Error('Insufficient balance');
+    }
+    this.balance -= parseFloat(amount)
+    this.transactions.push({
+      date: new Date().toLocaleDateString(),
+      credit: null,
+      debit: parseFloat(amount).toFixed(2),
+      balance: this.balance.toFixed(2)
+    })
+  }
 
-    withdrawal(amount) {
-      if(typeof amount !== "number" || amount <= 0) {
-        throw new Error("Invalid withdrawal amount");
-      }
-      if(amount > this.balance) {
-        throw new Error("Insufficient balance");
-      }
-      this.balance -= amount;
-      this.history.push({
-        date: new Date(),
-        type: 'withdrawal',
-        amount: amount,
-        balance: this.balance
-      });
-    };
+  printStatement() {
+    console.log("date || credit || debit || balance")
+    this.transactions.reverse().forEach(transaction => {
+      console.log(`${transaction.date} || ${transaction.credit || ""} || ${transaction.debit || ""} || ${transaction.balance}`)
+    })
+  }
+}
 
-    printStatement() {
-    let statement = "date || credit || debit || balance\n";
-    this.history.reverse().forEach(transaction => {
-      statement +=
-        `${transaction.date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })} || ${transaction.type === 'deposit' ? transaction.amount : ''} || ${transaction.type === 'withdrawal' ? transaction.amount : ''} || ${transaction.balance}\n`
-    });
-    return statement;
-  }};
-
-  module.exports = BankAccount;
+module.exports = BankAccount;

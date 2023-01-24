@@ -1,82 +1,62 @@
-const BankAccount = require('../src/BankAccount');
+const BankAccount = require('../src/bankAccount');
 
 describe('BankAccount', () => {
-  let account;
+    let account;
 
-  beforeEach(() => {
-    account = new BankAccount();
-  });
+    beforeEach(() => {
+        account = new BankAccount();
+    });
 
-    it('should update the balance and history when deposit', () => {
+    it('should update the balance and transactions when deposit', () => {
       account.deposit(100);
-      expect(account.balance).toBe(100);
-      expect(account.history).toEqual([{
-        date: expect.any(Date),
-        type: 'deposit',
-        amount: 100,
-        balance: 100
-      }]);
+        expect(account.balance.toFixed(2)).toBe("100.00");
+        expect(account.transactions).toEqual([{
+          date: expect.any(String),
+          credit: "100.00",
+          debit: null,
+          balance: "100.00"
+        }]);
     });
 
     it('should throw error when deposit amount is invalid', () => {
-      expect(() => account.deposit(-500)).toThrow('Invalid deposit amount');
-      expect(() => account.deposit('500')).toThrow('Invalid deposit amount');
+        expect(() => account.deposit(-500)).toThrow('Invalid deposit amount');
+        expect(() => account.deposit('500')).toThrow('Invalid deposit amount');
     });
 
     it('should withdraw money', () => {
-      account.deposit(1000);
-      account.withdrawal(500);
-      expect(account.balance).toBe(500);
+        account.deposit(1000);
+        account.withdraw(500);
+        expect(account.balance).toBe(500);
     });
 
     it('should not allow withdrawal more than balance and trhow error', () => {
-      account.deposit(100);
-      expect(() => {
-        account.withdrawal(200)
-      }).toThrow('Insufficient balance');
+        account.deposit(100);
+        expect(() => {
+            account.withdraw(200)
+        }).toThrow('Insufficient balance');
     });
 
     it('should throw error when withdrawal amount is invalid', () => {
-      expect(() => account.withdrawal(-100)).toThrow('Invalid withdrawal amount');
-      expect(() => account.withdrawal("100")).toThrow('Invalid withdrawal amount');
-    })
-});
-
-describe('BankAccount mocking', () => {
-  let account;
-  let outputData;
-  let mockConsole;
-
-  beforeEach(() => {
-    account = new BankAccount();
-    account.deposit(1000);
-    account.withdrawal(500);
-    outputData = captureOutput(() => {
-      account.printStatement();
-    mockConsole = jest.spyOn(console, 'log').mockImplementation();
+        expect(() => account.withdraw(-100)).toThrow('Invalid withdrawal amount');
+        expect(() => account.withdraw("100")).toThrow('Invalid withdrawal amount');
     });
-  });
 
-  it('should display the statement', () => {
-    let statement = account.printStatement();
-    expect(statement).toMatchSnapshot();
-  });
+    it('should print statement', () => {
+        account.deposit(1000);
+        account.withdraw(500);
+        account.deposit(200);
+        const statement = captureOutput(() => account.printStatement());
+        expect(statement).toEqual("date || credit || debit || balance\n" + new Date().toLocaleDateString() + " || 200.00 ||  || 700.00\n" + new Date().toLocaleDateString() + " ||  || 500.00 || 500.00\n" + new Date().toLocaleDateString() + " || 1000.00 ||  || 1000.00\n");
+    });
 
-  it('should display the statement in the correct order', () => {
-    let statement = account.printStatement();
-    expect(statement).toEqual("date || credit || debit || balance\n24/01/2023 || 1000 ||  || 1000\n24/01/2023 ||  || 500 || 500\n");
-  });
-
-  // test('should display the statement ')
-
-  function captureOutput(cb) {
-    var ret = '';
-    var original = console.log;
-    console.log = function (str) {
-      ret += str + '\n';
-    };
-    cb();
-    console.log = original;
-    return ret;
-  }
+    function captureOutput(cb) {
+        let ret = '';
+        let original = console.log;
+        console.log = function (str) {
+            ret += str + '\n';
+        };
+        cb();
+        console.log = original;
+        return ret;
+    }
 });

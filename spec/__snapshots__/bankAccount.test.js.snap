@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`BankAccount mocking should display the statement 1`] = `
-"date || credit || debit || balance
-24/01/2023 || 1000 ||  || 1000
-24/01/2023 ||  || 500 || 500
-"
-`;
