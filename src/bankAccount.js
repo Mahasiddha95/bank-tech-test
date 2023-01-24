@@ -32,5 +32,14 @@ class BankAccount {
         balance: this.balance
       });
     };
-  }
+
+    printStatement() {
+    let statement = "date || credit || debit || balance\n";
+    this.history.reverse().forEach(transaction => {
+      statement +=
+        `${transaction.date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })} || ${transaction.type === 'deposit' ? transaction.amount : ''} || ${transaction.type === 'withdrawal' ? transaction.amount : ''} || ${transaction.balance}\n`
+    });
+    return statement;
+  }};
+  
   module.exports = BankAccount;
