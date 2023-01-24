@@ -1,6 +1,6 @@
 class BankAccount {
     constructor() {
-      this.balance = 0;
+      this.balance = 0.0;
       this.history = [];
     }
 
@@ -41,5 +41,5 @@ class BankAccount {
     });
     return statement;
   }};
-  
+
   module.exports = BankAccount;
