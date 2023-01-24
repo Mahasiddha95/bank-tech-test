@@ -1,4 +1,4 @@
-# bank-tech-test
+# Bank-Tech-Test
 
 Bank tech test
 
