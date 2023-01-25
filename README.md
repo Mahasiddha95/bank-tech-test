@@ -56,23 +56,23 @@ $ const Account = require("./src/bankAccount");
 
 // Step 2 - create new instance of account
 
-$ const account = new BankAccount();
+$ const bankAccount = new Account();
 
 // Step 3 - add few transactions to the class
 
-$ account.deposit(1000)
-$ account.deposit(3000)
-$ account.deposit(500)
+$ bankAccount.deposit(1000)
+$ bankAccount.deposit(3000)
+$ bankAccount.deposit(500)
 
 // Step 4 - withdraw some money from the account
   // note: will throw pre-built errors if amount is over the budget.
 
-$ account.withdrawal(200)
-$ account.withdrawal(50)
+$ bankAccount.withdrawal(200)
+$ bankAccount.withdrawal(50)
 
 // Step 6 - print the statement to the console in the required format.
 
-$ account.printStatement()
+$ bankAccount.printStatement()
 
 
 // To exit the node REPL
